@@ -44,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
                     <TouchableOpacity>
                         <AntDesign name="camera" size={24} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("AddChat")}>
                         <FontAwesome name="pencil" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
         })
     }, [navigation])
     
-    console.log(auth)
+    // console.log(auth)
 
     return (
         <SafeAreaView>
