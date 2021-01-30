@@ -3,7 +3,10 @@ import React, { useLayoutEffect } from 'react'
 import { ScrollView, View, Text, SafeAreaView } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import CustomListItem from '../components/CustomListItem'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
+
 
 const HomeScreen = ({ navigation }) => {
     
@@ -31,6 +34,21 @@ const HomeScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             ),
+            headerRight: () => (
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width:80,
+                    marginRight: 20,
+                }}>
+                    <TouchableOpacity>
+                        <AntDesign name="camera" size={24} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <FontAwesome name="pencil" size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
+            )
         })
     }, [navigation])
     
