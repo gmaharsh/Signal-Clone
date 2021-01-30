@@ -12,7 +12,7 @@ const CustomListItem = ({id, chatName, enterChat}) => {
                 }}
             />
             <ListItem.Content>
-                <ListItem.Title style={{ fontWeight: 900 }}>
+                <ListItem.Title style={{ fontWeight: "900" }}>
                     Youtube Chat
                 </ListItem.Title>
                 <ListItem.Subtitle

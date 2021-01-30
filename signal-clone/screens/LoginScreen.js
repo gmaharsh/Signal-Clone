@@ -23,6 +23,7 @@ const LoginScreen = ({navigation}) => {
     const signIn = () => {
         
     }
+    console.log(auth)
 
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>

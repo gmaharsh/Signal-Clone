@@ -19,11 +19,12 @@ const RegisterScreen = ({ navigation }) => {
     },[navigation])
 
     const register = () => {
+        console.log(imageUrl)
         auth.createUserWithEmailAndPassword(email, password)
             .then(authUser => {
                 authUser.user.updateProfile({
                     displayName: name,
-                    photoUrl: imageUrl || 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
+                    photoURL: imageUrl
                 });
             }).catch((error) => {
                 alert(error.message)
