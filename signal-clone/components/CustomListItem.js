@@ -2,9 +2,10 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 
-const CustomListItem = ({id, chatName, enterChat}) => {
+const CustomListItem = ({ id, chatName, enterChat }) => {
+    console.log(chatName)
     return (
-        <ListItem>
+        <ListItem id={id} bottomDivider>
             <Avatar
                 rounded
                 source={{
@@ -13,7 +14,7 @@ const CustomListItem = ({id, chatName, enterChat}) => {
             />
             <ListItem.Content>
                 <ListItem.Title style={{ fontWeight: "900" }}>
-                    Youtube Chat
+                    {chatName}
                 </ListItem.Title>
                 <ListItem.Subtitle
                     numberOfLines={1}
