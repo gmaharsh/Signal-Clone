@@ -21,9 +21,11 @@ const LoginScreen = ({navigation}) => {
     })
 
     const signIn = () => {
-        
+        auth.signInWithEmailAndPassword(email, password)
+            .catch(err => {
+                alert(err)
+            })
     }
-    console.log(auth)
 
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
