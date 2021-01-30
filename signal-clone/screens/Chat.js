@@ -20,9 +20,7 @@ const Chat = ({ navigation, route }) => {
 
     useEffect(() => {
         const unsubscribe = db.collection('chats')
-            .doc(route.params.id)
-            .orderBy('timestamp', 'desc')
-            .onSnapshot((snapshot) => {
+            .doc(route.params.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
             setMessages(
                 snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -136,6 +134,16 @@ export default Chat;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+    },
+    receiver: {
+        padding: 15,
+        backgroundColor: "#ECECEC",
+        alignSelf: "flex-end",
+        borderRadius: 20,
+        marginRight: 15,
+        marginBottom: 20,
+        maxWidth: "80%",
+        position:"relative"
     },
     footer: {
         flexDirection: "row",
