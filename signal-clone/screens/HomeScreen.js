@@ -1,11 +1,24 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useLayoutEffect } from 'react'
+import { ScrollView, View, Text, SafeAreaView, _ScrollView } from 'react-native'
+import CustomListItem from '../components/CustomListItem'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: "Signal",
+            headerStyle: { backgroundColor: "#fff" },
+            headerTitleStyle: { color: "black" },
+            headerTintColor:"black"
+        })
+    },[navigation])
+
     return (
-        <View>
-            <Text>This is the home page</Text>
-        </View>
+        <SafeAreaView>
+            <ScrollView>
+                <CustomListItem />
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

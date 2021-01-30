@@ -24,17 +24,18 @@ const RegisterScreen = ({ navigation }) => {
                 authUser.user.updateProfile({
                     displayName: name,
                     photoUrl: imageUrl || 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
-                    
-                })
+                });
+            }).catch((error) => {
+                alert(error.message)
             })
             
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
+        <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <StatusBar style="light" />
             <Text h3 style={{ marginBottom: 50 }}>
-                Create a signal account
+                 Create a signal account
             </Text>
             <View style={styles.inputContainer}>
                 <Input
@@ -68,7 +69,18 @@ const RegisterScreen = ({ navigation }) => {
                 />
             </View>
             <Button style={styles.button} raised onPress={register} title="Register" />
+            {/* <Button containerStyle={styles.button} onPress={() => navigation.navigate("Register")} type="outline" title="Register" /> */}
         </KeyboardAvoidingView>
+        // <KeyboardAvoidingView style={styles.container}>
+        //     <StatusBar style="light" />
+        //     <Text h3 style={{ marginBottom: 50 }}>
+        //         Create a signal account
+        //     </Text>
+        //     <View style={styles.inputContainer}>
+                
+        //     </View>
+        //     <Button style={styles.button} raised onPress={register} title="Register" />
+        // </KeyboardAvoidingView>
     )
 }
 
