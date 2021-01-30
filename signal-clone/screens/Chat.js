@@ -2,11 +2,16 @@ import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import { StatusBar } from 'expo-status-bar'
 import React, { useLayoutEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native'
 import { Platform } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { auth, db } from '../firebase'
+import * as firebase from 'firebase';
+import { Keyboard } from 'react-native';
+
 
 const Chat = ({ navigation, route }) => {
 
@@ -53,7 +58,17 @@ const Chat = ({ navigation, route }) => {
     }, [navigation])
     
     const sendMessage = () => {
+        Keyboard.dismiss();
         
+        db.collection('chats').doc(route.params.id).collection('messages').add({
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            message: input,
+            displayName: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            photoURL: auth.currentUser.photoURL
+        })
+
+        setInput('');
     }
 
     return (
@@ -64,6 +79,7 @@ const Chat = ({ navigation, route }) => {
                 style={styles.container}
                 keyboardVerticalOffset={90}
             >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <>
                     <ScrollView>
                         {/* Chat Goes here */}
@@ -73,6 +89,7 @@ const Chat = ({ navigation, route }) => {
                             placeholder="Signal Message"
                             style={styles.textInput}
                             value={input}
+                            onSubmitEditing={sendMessage}
                             onChangeText={(text) =>setInput(text)}
                         />
                         <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
@@ -80,6 +97,7 @@ const Chat = ({ navigation, route }) => {
                         </TouchableOpacity>
                     </View>
                 </>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
