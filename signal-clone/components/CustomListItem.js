@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
+import { db } from '../firebase';
 
 const CustomListItem = ({ id, chatName, enterChat }) => {
-    console.log(chatName)
+
+    const [chatMessages, setChatMessages] = useState([]);
+    
+    useLayoutEffect(() => {
+        const unsubscribe = db.collection('chats')
+            .doc(id)
+            .collection('messages')
+            .orderBy('timestamp', 'desc')
+            .onSnapshot((snapshot) => {
+            setChatMessages(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            )
+            })
+        return unsubscribe;
+    },[id])
+
+    console.log(chatMessages[0])
+
     return (
         <ListItem id={id} bottomDivider onPress={() => enterChat(id, chatName)}>
             <Avatar
                 rounded
                 source={{
-                    uri: "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png"
+                    uri: chatMessages[0]?.data.photoURL
                 }}
             />
             <ListItem.Content>
@@ -20,7 +41,7 @@ const CustomListItem = ({ id, chatName, enterChat }) => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                 >
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {chatMessages[0]?.data.displayName} : {chatMessages[0]?.data.message}
                 </ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>
