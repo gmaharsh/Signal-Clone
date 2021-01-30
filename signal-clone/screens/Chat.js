@@ -44,7 +44,7 @@ const Chat = ({ navigation, route }) => {
                     <Avatar
                         rounded
                         source={{ 
-                            uri:"https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png"
+                            uri:messages.slice(-1)[0]?.data.photoURL
                         }}
                     />
                     <Text style={{ color: "white", marginLeft: 20, fontWeight: "700" }}>{route.params.chatName}</Text>
@@ -69,7 +69,7 @@ const Chat = ({ navigation, route }) => {
                 </View>
             )
         });
-    }, [navigation])
+    }, [navigation, messages])
     
     const sendMessage = () => {
         Keyboard.dismiss();
