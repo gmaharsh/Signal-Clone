@@ -95,17 +95,47 @@ const Chat = ({ navigation, route }) => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <>
-                    <ScrollView>
+                    <ScrollView contentContainerStyle={{paddingTop:10}}>
                         {messages.map(({ id, data }) => (
                             data.email === auth.currentUser.email ? (
                                 <View key={id} style={styles.receiver}>
-                                    <Avatar />
-                                    <Text style={styles.receiveText}>{data.message}</Text>
+                                    <Avatar
+                                        position="absolute"
+                                        rounded
+                                        size={30}
+                                        bottom={-15}
+                                        right={-5}
+                                        containerStyle={{
+                                            position: "absolute",
+                                            bottom: -15,
+                                            right:-5
+                                        }}
+                                        source={{
+                                            uri:data.photoURL
+                                        }}
+                                    />
+                                    <Text style={styles.receiverText}>{data.message}</Text>
+                                    <Text style={styles.receiverName}>{data.displayName}</Text>
                                 </View>
                             ): (
                                 <View key={id} style={styles.sender}>
-                                    <Avatar />
+                                    <Avatar
+                                        position="absolute"
+                                        rounded
+                                        size={30}
+                                        bottom={-15}
+                                        left={-5}
+                                        containerStyle={{
+                                            position: "absolute",
+                                            bottom: -15,
+                                            left:-5
+                                        }}
+                                        source={{
+                                            uri:data.photoURL
+                                        }}
+                                    />
                                     <Text style={styles.senderText}>{data.message}</Text>
+                                    <Text style={styles.senderName}>{data.displayName}</Text>
                                 </View>
                             )
                         ))}
@@ -136,14 +166,49 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     receiver: {
-        padding: 15,
+        padding: 10,
         backgroundColor: "#ECECEC",
         alignSelf: "flex-end",
         borderRadius: 20,
-        marginRight: 15,
-        marginBottom: 20,
+        marginRight: 10,
+        marginTop: 10,
+        marginBottom: 15,
         maxWidth: "80%",
         position:"relative"
+    },
+    receiverText: {
+        color: "black",
+        fontWeight: "500",
+        marginRight: 10,
+    },
+    receiverName: {
+        right: 10,
+        padding: 10,
+        fontSize: 10,
+        color:"black"
+    },
+    sender: {
+        padding: 10,
+        backgroundColor: "#2B68E6",
+        alignSelf: "flex-start",
+        borderRadius: 20,
+        marginLeft: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        maxWidth: "80%",
+        position:"relative"
+    },
+    senderText: {
+        color: "white",
+        fontWeight: "500",
+        marginLeft: 10,
+        marginBottom:15
+    },
+    senderName: {
+        left: 10,
+        padding: 10,
+        fontSize: 10,
+        color:"white"
     },
     footer: {
         flexDirection: "row",
