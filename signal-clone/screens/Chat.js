@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import { StatusBar } from 'expo-status-bar'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native'
 import { Platform } from 'react-native'
@@ -16,6 +16,22 @@ import { Keyboard } from 'react-native';
 const Chat = ({ navigation, route }) => {
 
     const [input, setInput] = useState("");
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        const unsubscribe = db.collection('chats')
+            .doc(route.params.id)
+            .orderBy('timestamp', 'desc')
+            .onSnapshot((snapshot) => {
+            setMessages(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            )
+            })
+        return unsubscribe;
+    },[route])
     
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -82,7 +98,19 @@ const Chat = ({ navigation, route }) => {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <>
                     <ScrollView>
-                        {/* Chat Goes here */}
+                        {messages.map(({ id, data }) => (
+                            data.email === auth.currentUser.email ? (
+                                <View key={id} style={styles.receiver}>
+                                    <Avatar />
+                                    <Text style={styles.receiveText}>{data.message}</Text>
+                                </View>
+                            ): (
+                                <View key={id} style={styles.sender}>
+                                    <Avatar />
+                                    <Text style={styles.senderText}>{data.message}</Text>
+                                </View>
+                            )
+                        ))}
                     </ScrollView>
                     <View style={styles.footer}>
                         <TextInput
