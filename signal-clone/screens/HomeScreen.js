@@ -1,6 +1,6 @@
 import { auth, db } from '../firebase'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { ScrollView, View, Text, SafeAreaView } from 'react-native'
+import { ScrollView, View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import CustomListItem from '../components/CustomListItem'
 import { TouchableOpacity } from 'react-native';
@@ -66,11 +66,19 @@ const HomeScreen = ({ navigation }) => {
     },[])
     // console.log(auth)
     console.log(chats.length)
+
+    const enterChat = (id, chatName) => {
+        navigation.navigate('Chat', { 
+            id,
+            chatName
+        })
+    }
+
     return (
         <SafeAreaView>
-            <ScrollView>
+            <ScrollView style={styles.container}>
                 {chats && chats.map(({id, data :{chatName} }) => (
-                    <CustomListItem key={id} id={id} chatName={chatName} />
+                    <CustomListItem key={id} id={id} chatName={chatName} enterChat={enterChat} />
                 ))}
             </ScrollView>
         </SafeAreaView>
@@ -78,3 +86,9 @@ const HomeScreen = ({ navigation }) => {
 }
 
 export default HomeScreen
+
+const styles = StyleSheet.create({
+    container: {
+        height:'100%'
+    },
+})

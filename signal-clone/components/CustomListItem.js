@@ -5,7 +5,7 @@ import { Avatar, ListItem } from 'react-native-elements'
 const CustomListItem = ({ id, chatName, enterChat }) => {
     console.log(chatName)
     return (
-        <ListItem id={id} bottomDivider>
+        <ListItem id={id} bottomDivider onPress={() => enterChat(id, chatName)}>
             <Avatar
                 rounded
                 source={{
