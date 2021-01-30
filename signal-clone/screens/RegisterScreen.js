@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar'
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
-import { Input } from 'react-native-elements'
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { Button, Input, Text } from 'react-native-elements'
 
 const RegisterScreen = ({ navigation }) => {
     
@@ -17,9 +17,9 @@ const RegisterScreen = ({ navigation }) => {
     return (
         <KeyboardAvoidingView style={styles.container}>
             <StatusBar style="light" />
-            {/* <Text h3 style={{ marginBottom: 50 }}>
+            <Text h3 style={{ marginBottom: 50 }}>
                 Create a signal account
-            </Text> */}
+            </Text>
 
             <View style={styles.inputContainer}>
                 <Input
@@ -52,6 +52,7 @@ const RegisterScreen = ({ navigation }) => {
                     onSubmit={register}
                 />
             </View>
+            <Button style={styles.button} raised onPress={register} title="Register" />
         </KeyboardAvoidingView>
     )
 }
@@ -59,6 +60,18 @@ const RegisterScreen = ({ navigation }) => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-    container: {},
-    inputContainer: {}
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        backgroundColor:"white",
+    },
+    inputContainer: {
+        width: 300,
+    },
+    button: {
+        width: 200,
+        marginTop:10
+    }
 })
