@@ -1,12 +1,24 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
+import { auth } from '../firebase';
+import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { Button, Image, Input } from 'react-native-elements'
 
 const LoginScreen = ({navigation}) => {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] =  useState("");
+    const [password, setPassword] = useState("");
+    
+    useEffect(() => {
+        const unsubscribe = auth
+            .onAuthStateChanged((authUser) => {
+                if (authUser) {
+                    navigation.replace("Home")
+                }
+            });
+        
+        return unsubscribe;
+    })
 
     const signIn = () => {
         

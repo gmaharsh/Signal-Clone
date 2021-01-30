@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar'
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements'
+import { auth } from '../firebase';
 
 const RegisterScreen = ({ navigation }) => {
     
@@ -12,12 +13,21 @@ const RegisterScreen = ({ navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerBackTitle:"Back to Login"
+            headerBackTitle: "Back to Login",
+            
         })
     },[navigation])
 
     const register = () => {
-        
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(authUser => {
+                authUser.user.updateProfile({
+                    displayName: name,
+                    photoUrl: imageUrl || 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png',
+                    
+                })
+            })
+            
     }
 
     return (
