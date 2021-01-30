@@ -5,7 +5,13 @@ import { Avatar } from 'react-native-elements'
 import CustomListItem from '../components/CustomListItem'
 import { TouchableOpacity } from 'react-native'
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
+    
+    const signOutUser = () => {
+        auth.signOut().then(() => {
+            navigation.replace("Login")
+        });
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -15,7 +21,7 @@ const HomeScreen = ({navigation}) => {
             headerTintColor: "black",
             headerLeft: () => (
                 <View style={{ marginLeft: 20 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={signOutUser} activeOpacity={0.5}>
                         <Avatar
                             rounded
                             source={{
